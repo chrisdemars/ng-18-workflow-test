@@ -1,0 +1,25 @@
+name: Security Audit
+
+# This tells GitHub to run the check on every 'push' to the main branch
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Download your code onto the GitHub server
+      - uses: actions/checkout@v4
+
+      # 2. Set up Node.js (the engine that runs your JS code)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.14.0"
+
+      # 3. Run the security audit
+      - name: Run npm audit
+        run: npm audit --audit-level=high
