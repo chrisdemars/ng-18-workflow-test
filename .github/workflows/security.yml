@@ -3,9 +3,9 @@ name: Security Audit
 # This tells GitHub to run the check on every 'push' to the main branch
 on:
   push:
-    branches: [main]
+    branches: [dep-patch]
   pull_request:
-    branches: [main]
+    branches: [dep-patch]
 
 jobs:
   scan:
