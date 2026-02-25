@@ -32,7 +32,7 @@ jobs:
 
       - name: Install Dependencies
         # Switched to 'npm install' as the lockfile is removed in the previous step
-        run: npm install
+        run: npm install --legacy-peer-deps
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
