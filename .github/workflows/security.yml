@@ -22,7 +22,7 @@ jobs:
         # We write the auth config to the local .npmrc
         run: |
           echo "@els-angular:registry=https://nexus.repo.tuxcare.com/repository/els-angular/" >> .npmrc
-          echo "//nexus.repo.tuxcare.com/repository/els-angular/:_auth=\${NPM_TOKEN}" >> .npmrc
+          echo "//nexus.repo.tuxcare.com/repository/els-angular/:_auth=${{ secrets.NPM_TOKEN }}" >> .npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
