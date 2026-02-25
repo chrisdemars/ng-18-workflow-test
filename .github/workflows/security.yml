@@ -26,9 +26,13 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # NEW STEP: This will now successfully pull from TuxCare
+      - name: Clean Environment
+        # This ensures a fresh slate before installation
+        run: rm -rf node_modules package-lock.json yarn.lock build dist && npm cache clean --force && yarn cache clean --all
+
       - name: Install Dependencies
-        run: npm ci
+        # Switched to 'npm install' as the lockfile is removed in the previous step
+        run: npm install
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
