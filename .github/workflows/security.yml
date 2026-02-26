@@ -1,5 +1,6 @@
 name: Security Audit
 
+# This tells GitHub to run the check on every 'push' to the main branch
 on:
   push:
     branches: [main, dep-patch]
@@ -10,25 +11,15 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
+      # 1. Download your code onto the GitHub server
       - uses: actions/checkout@v4
 
+      # 2. Set up Node.js (the engine that runs your JS code)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24.14.0"
-          # This sets the default registry
-          registry-url: "https://registry.npmjs.org"
+          node-version: "24"
 
-      - name: Configure Private Registry
-        # We manually append the scoped registry to the generated .npmrc
-        run: |
-          echo "@els-angular:registry=https://nexus.repo.tuxcare.com/repository/els-angular/" >> .npmrc
-          echo "//nexus.repo.tuxcare.com/repository/els-angular/:_auth=\${NPM_TOKEN}" >> .npmrc
-        env:
-          # This maps your GitHub Secret to the environment variable used above
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+      # 3. Run the security audit
       - name: Run npm audit
         run: npm audit --audit-level=high
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
